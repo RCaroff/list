@@ -22,6 +22,7 @@ protocol ListPresenterInput: class {
 protocol ListPresenterOutput: class {
   func reloadDatas()
   func emptyTextField()
+  func deleteRowAtIndexPath(_ indexPath: IndexPath)
 }
 
 class ListPresenter {
@@ -73,5 +74,10 @@ extension ListPresenter: ListInteractorOutput {
   func notifyItemsUpdated() {
     output.emptyTextField()
     output.reloadDatas()
+  }
+  
+  func notifyItemDeleted(at index: Int) {
+    let indexPath = IndexPath(row: index, section: 0)
+    output.deleteRowAtIndexPath(indexPath)
   }
 }

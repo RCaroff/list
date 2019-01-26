@@ -33,11 +33,13 @@ class UserDefaultsStorage: Storage {
   func delete(key: String) throws {
     let userDefaults = UserDefaults.standard
     userDefaults.set(nil, forKey: key)
+    userDefaults.synchronize()
   }
   
   func set<T: Encodable>(object: T, forKey key: String) throws {
     let userDefaults = UserDefaults.standard
     let data = try JSONEncoder().encode(object)
     userDefaults.set(data, forKey: key)
+    userDefaults.synchronize()
   }
 }

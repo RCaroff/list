@@ -11,7 +11,7 @@ import UIKit
 class ListViewController: UIViewController {
   
   @IBOutlet var tableView: UITableView!
-  private var footerInputView: ListFooterInputView!
+  private var footerInputView: ListFooterInputView?
   
   var presenter: ListPresenterInput!
 
@@ -76,7 +76,7 @@ extension ListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     switch editingStyle {
     case .delete:
-      presenter.didTapDelete(at: indexPath.row)
+      self.presenter.didTapDelete(at: indexPath.row)
     default:
       return
     }
@@ -91,9 +91,12 @@ extension ListViewController: ListFooterInputViewDelegate {
 
 // MARK: - ListPresenterOutput
 extension ListViewController: ListPresenterOutput {
+  func deleteRowAtIndexPath(_ indexPath: IndexPath) {
+    tableView.deleteRows(at: [indexPath], with: .automatic)
+  }
   
   func emptyTextField() {
-    footerInputView.clearTextField()
+    footerInputView?.clearTextField()
   }
   
   func reloadDatas() {

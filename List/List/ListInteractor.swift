@@ -17,10 +17,12 @@ protocol ListInteractorInput: class {
   func selectItem(at index: Int)
   func clearAll()
   func clearDone()
+  func saveState()
 }
 
 protocol ListInteractorOutput: class {
   func notifyItemsUpdated()
+  func notifyItemDeleted(at index: Int)
 }
 
 class ListInteractor {
@@ -35,6 +37,17 @@ class ListInteractor {
 }
 
 extension ListInteractor: ListInteractorInput {
+  
+  func saveState() {
+    let dataModels = items.map { itemProtocol -> ListItemDataModel in
+      return ListItemDataModel(label: itemProtocol.label, isSelected: itemProtocol.isSelected)
+    }
+    do {
+      try repository.save(dataModels: dataModels)
+    } catch {
+      debugPrint("unable to save")
+    }
+  }
 
   func loadItems() {
     do {
@@ -81,7 +94,7 @@ extension ListInteractor: ListInteractorInput {
   
   func deleteItem(at index: Int) {
     items.remove(at: index)
-    output?.notifyItemsUpdated()
+    output?.notifyItemDeleted(at: index)
   }
   
   func selectItem(at index: Int) {
