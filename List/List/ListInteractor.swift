@@ -23,6 +23,7 @@ protocol ListInteractorInput: class {
 protocol ListInteractorOutput: class {
   func notifyItemsUpdated()
   func notifyItemDeleted(at index: Int)
+  func notifyItemAdded()
 }
 
 class ListInteractor {
@@ -89,7 +90,7 @@ extension ListInteractor: ListInteractorInput {
   func addItem(with string: String) {
     let item = ListItem(withLabel: string)
     items.append(item)
-    output?.notifyItemsUpdated()
+    output?.notifyItemAdded()
   }
   
   func deleteItem(at index: Int) {

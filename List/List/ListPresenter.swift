@@ -23,6 +23,7 @@ protocol ListPresenterOutput: class {
   func reloadDatas()
   func emptyTextField()
   func deleteRowAtIndexPath(_ indexPath: IndexPath)
+  func addRow()
 }
 
 class ListPresenter {
@@ -71,6 +72,11 @@ extension ListPresenter: ListPresenterInput {
 }
 
 extension ListPresenter: ListInteractorOutput {
+  func notifyItemAdded() {
+    output.addRow()
+    output.emptyTextField()
+  }
+  
   func notifyItemsUpdated() {
     output.emptyTextField()
     output.reloadDatas()

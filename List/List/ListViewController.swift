@@ -91,6 +91,13 @@ extension ListViewController: ListFooterInputViewDelegate {
 
 // MARK: - ListPresenterOutput
 extension ListViewController: ListPresenterOutput {
+  
+  func addRow() {
+    let ip = IndexPath(row: presenter.numberOfItems()-1, section: 0)
+    tableView.insertRows(at: [ip], with: .automatic)
+    tableView.scrollToRow(at: IndexPath(row: presenter.numberOfItems()-1, section: 0), at: .top, animated: true)
+  }
+  
   func deleteRowAtIndexPath(_ indexPath: IndexPath) {
     tableView.deleteRows(at: [indexPath], with: .automatic)
   }

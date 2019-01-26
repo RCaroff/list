@@ -16,6 +16,14 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="57"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P86-cg-RNL">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="57"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qfj-1R-pEJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="57"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="prominent"/>
+                </visualEffectView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add item..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="E13-rS-oP1">
                     <rect key="frame" x="16" y="0.0" width="304" height="57"/>
                     <nil key="textColor"/>
@@ -37,10 +45,14 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="hSF-zq-Sox" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="CFE-4v-LhL"/>
+                <constraint firstItem="P86-cg-RNL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DrY-Rg-RcP"/>
+                <constraint firstAttribute="bottom" secondItem="P86-cg-RNL" secondAttribute="bottom" id="JuJ-dd-snC"/>
                 <constraint firstItem="hSF-zq-Sox" firstAttribute="leading" secondItem="E13-rS-oP1" secondAttribute="trailing" constant="8" id="NGi-df-yMA"/>
+                <constraint firstItem="P86-cg-RNL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="O9c-1u-NNj"/>
+                <constraint firstItem="P86-cg-RNL" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kC8-Xs-INF"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="E13-rS-oP1" secondAttribute="bottom" id="keM-LE-FoW"/>
                 <constraint firstItem="hSF-zq-Sox" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="mEN-NX-lBH"/>
                 <constraint firstItem="hSF-zq-Sox" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="s8f-fv-81m"/>
