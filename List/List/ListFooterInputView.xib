@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ListFooterInputView" customModule="List" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="57"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add item..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="E13-rS-oP1">
+                    <rect key="frame" x="16" y="0.0" width="304" height="57"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="hzV-Go-hsI"/>
+                    </connections>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSF-zq-Sox">
+                    <rect key="frame" x="328" y="0.0" width="47" height="57"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="47" id="bSp-0T-IkC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                    <state key="normal" title="+"/>
+                    <connections>
+                        <action selector="didTapEnterButton" destination="iN0-l3-epB" eventType="touchUpInside" id="lA0-rf-QlR"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="hSF-zq-Sox" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="CFE-4v-LhL"/>
+                <constraint firstItem="hSF-zq-Sox" firstAttribute="leading" secondItem="E13-rS-oP1" secondAttribute="trailing" constant="8" id="NGi-df-yMA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="E13-rS-oP1" secondAttribute="bottom" id="keM-LE-FoW"/>
+                <constraint firstItem="hSF-zq-Sox" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="mEN-NX-lBH"/>
+                <constraint firstItem="hSF-zq-Sox" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="s8f-fv-81m"/>
+                <constraint firstItem="E13-rS-oP1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="t0F-mm-Nkb"/>
+                <constraint firstItem="E13-rS-oP1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="znR-Yv-cub"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="enterButton" destination="hSF-zq-Sox" id="k51-nm-6ik"/>
+                <outlet property="textField" destination="E13-rS-oP1" id="q3c-KV-F1w"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="-120.98950524737631"/>
+        </view>
+    </objects>
+</document>
