@@ -84,7 +84,8 @@ extension ListInteractor: ListInteractorInput {
   }
   
   func clearDone() {
-    
+    items = items.filter { !$0.isSelected }
+    output?.notifyItemsUpdated()
   }
   
   func addItem(with string: String) {

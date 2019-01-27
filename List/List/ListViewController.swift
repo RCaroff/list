@@ -25,7 +25,7 @@ class ListViewController: UIViewController {
   }
   
   @IBAction func clearDoneButtonTapped() {
-    
+    presenter.didTapClearDoneButton()
   }
 }
 
@@ -107,6 +107,6 @@ extension ListViewController: ListPresenterOutput {
   }
   
   func reloadDatas() {
-    tableView.reloadData()
+    tableView.reloadSections([0], with: .automatic)
   }
 }
