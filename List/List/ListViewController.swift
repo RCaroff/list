@@ -27,6 +27,10 @@ class ListViewController: UIViewController {
   @IBAction func clearDoneButtonTapped() {
     presenter.didTapClearDoneButton()
   }
+  
+  @IBAction func editButtonTapped() {
+    tableView.setEditing(!tableView.isEditing, animated: true)
+  }
 }
 
 // MARK: - UITableViewDataSource
@@ -81,6 +85,14 @@ extension ListViewController: UITableViewDelegate {
       return
     }
   }
+  
+  func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    return true
+  }
+  
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    presenter.didMoveRow(from: sourceIndexPath.row, to: destinationIndexPath.row)
+  }
 }
 
 extension ListViewController: ListFooterInputViewDelegate {
@@ -108,5 +120,10 @@ extension ListViewController: ListPresenterOutput {
   
   func reloadDatas() {
     tableView.reloadSections([0], with: .automatic)
+  }
+  
+  func didMakeSelection(at index: Int) {
+    let indexPath = IndexPath(row: index, section: 0)
+    tableView.reloadRows(at: [indexPath], with: .fade)
   }
 }

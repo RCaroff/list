@@ -47,16 +47,26 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="znQ-Vk-U9f">
-                        <barButtonItem key="leftBarButtonItem" title="Clear all" id="pfE-PQ-2Pq">
-                            <connections>
-                                <action selector="clearAllButtonTapped" destination="BYZ-38-t0r" id="M88-eM-mCM"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Clear done" id="RXo-kc-xwJ">
-                            <connections>
-                                <action selector="clearDoneButtonTapped" destination="BYZ-38-t0r" id="1p8-V3-vZ8"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="trash" id="pfE-PQ-2Pq">
+                                <connections>
+                                    <action selector="clearAllButtonTapped" destination="BYZ-38-t0r" id="M88-eM-mCM"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Clear done" id="RXo-kc-xwJ">
+                                <connections>
+                                    <action selector="clearDoneButtonTapped" destination="BYZ-38-t0r" id="1p8-V3-vZ8"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Edit" id="GmJ-8I-kYv">
+                                <connections>
+                                    <action selector="editButtonTapped" destination="BYZ-38-t0r" id="JT7-p0-asm"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="A-Z" id="NYc-B0-IeA"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="wQV-KA-5IV" id="jLH-Qs-etl"/>

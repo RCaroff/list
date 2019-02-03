@@ -17,6 +17,7 @@ protocol ListPresenterInput: class {
   func didTapClearDoneButton()
   func didEnterNewString(_ label: String)
   func didTapDelete(at index: Int)
+  func didMoveRow(from originIndex: Int, to destinationIndex: Int)
 }
 
 protocol ListPresenterOutput: class {
@@ -24,6 +25,7 @@ protocol ListPresenterOutput: class {
   func emptyTextField()
   func deleteRowAtIndexPath(_ indexPath: IndexPath)
   func addRow()
+  func didMakeSelection(at index: Int)
 }
 
 class ListPresenter {
@@ -69,6 +71,10 @@ extension ListPresenter: ListPresenterInput {
   func didTapDelete(at index: Int) {
     interactor.deleteItem(at: index)
   }
+  
+  func didMoveRow(from originIndex: Int, to destinationIndex: Int) {
+    interactor.moveItem(from: originIndex, to: destinationIndex)
+  }
 }
 
 extension ListPresenter: ListInteractorOutput {
@@ -85,5 +91,9 @@ extension ListPresenter: ListInteractorOutput {
   func notifyItemDeleted(at index: Int) {
     let indexPath = IndexPath(row: index, section: 0)
     output.deleteRowAtIndexPath(indexPath)
+  }
+  
+  func notifyItemSelected(at index: Int) {
+    output.didMakeSelection(at: index)
   }
 }

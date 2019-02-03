@@ -18,12 +18,14 @@ protocol ListInteractorInput: class {
   func clearAll()
   func clearDone()
   func saveState()
+  func moveItem(from originIndex: Int, to destinationIndex: Int)
 }
 
 protocol ListInteractorOutput: class {
   func notifyItemsUpdated()
   func notifyItemDeleted(at index: Int)
   func notifyItemAdded()
+  func notifyItemSelected(at index: Int)
 }
 
 class ListInteractor {
@@ -101,6 +103,13 @@ extension ListInteractor: ListInteractorInput {
   
   func selectItem(at index: Int) {
     items[index].isSelected = !items[index].isSelected
-    output?.notifyItemsUpdated()
+    output?.notifyItemSelected(at: index)
+  }
+  
+  func moveItem(from originIndex: Int, to destinationIndex: Int) {
+    guard originIndex != destinationIndex else { return }
+    let item = items[originIndex]
+    items.remove(at: originIndex)
+    items.insert(item, at: destinationIndex)
   }
 }
