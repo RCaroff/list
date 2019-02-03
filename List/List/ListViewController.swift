@@ -12,6 +12,10 @@ class ListViewController: UIViewController {
   
   @IBOutlet var tableView: UITableView!
   private var footerInputView: ListFooterInputView?
+  @IBOutlet private var editButton: UIBarButtonItem!
+  @IBOutlet private var deleteAllButton: UIBarButtonItem!
+  @IBOutlet private var deleteDoneButton: UIBarButtonItem!
+  @IBOutlet private var azButton: UIBarButtonItem!
   
   var presenter: ListPresenterInput!
 
@@ -30,6 +34,14 @@ class ListViewController: UIViewController {
   
   @IBAction func editButtonTapped() {
     tableView.setEditing(!tableView.isEditing, animated: true)
+    editButton.title = tableView.isEditing ? "Done" : "Edit"
+    deleteAllButton.isEnabled = !tableView.isEditing
+    deleteDoneButton.isEnabled = !tableView.isEditing
+    azButton.isEnabled = !tableView.isEditing
+  }
+  
+  @IBAction func azOrderButtonTapped() {
+    presenter.didTapAZOrderButton()
   }
 }
 

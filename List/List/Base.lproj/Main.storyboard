@@ -65,10 +65,18 @@
                                     <action selector="editButtonTapped" destination="BYZ-38-t0r" id="JT7-p0-asm"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="A-Z" id="NYc-B0-IeA"/>
+                            <barButtonItem title="A-Z" id="NYc-B0-IeA">
+                                <connections>
+                                    <action selector="azOrderButtonTapped" destination="BYZ-38-t0r" id="z7R-Ng-FMQ"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="azButton" destination="NYc-B0-IeA" id="4DT-4a-4pe"/>
+                        <outlet property="deleteAllButton" destination="pfE-PQ-2Pq" id="ceM-wT-fSa"/>
+                        <outlet property="deleteDoneButton" destination="RXo-kc-xwJ" id="dVV-ut-riw"/>
+                        <outlet property="editButton" destination="GmJ-8I-kYv" id="TUb-Hc-Nvm"/>
                         <outlet property="tableView" destination="wQV-KA-5IV" id="jLH-Qs-etl"/>
                     </connections>
                 </viewController>

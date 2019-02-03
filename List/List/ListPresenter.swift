@@ -18,6 +18,7 @@ protocol ListPresenterInput: class {
   func didEnterNewString(_ label: String)
   func didTapDelete(at index: Int)
   func didMoveRow(from originIndex: Int, to destinationIndex: Int)
+  func didTapAZOrderButton()
 }
 
 protocol ListPresenterOutput: class {
@@ -74,6 +75,10 @@ extension ListPresenter: ListPresenterInput {
   
   func didMoveRow(from originIndex: Int, to destinationIndex: Int) {
     interactor.moveItem(from: originIndex, to: destinationIndex)
+  }
+  
+  func didTapAZOrderButton() {
+    interactor.makeAlpahabeticalOrder()
   }
 }
 

@@ -19,6 +19,7 @@ protocol ListInteractorInput: class {
   func clearDone()
   func saveState()
   func moveItem(from originIndex: Int, to destinationIndex: Int)
+  func makeAlpahabeticalOrder()
 }
 
 protocol ListInteractorOutput: class {
@@ -40,6 +41,11 @@ class ListInteractor {
 }
 
 extension ListInteractor: ListInteractorInput {
+  
+  func makeAlpahabeticalOrder() {
+    items.sort { $0.label < $1.label }
+    output?.notifyItemsUpdated()
+  }
   
   func saveState() {
     let dataModels = items.map { itemProtocol -> ListItemDataModel in
