@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol ListItemProtocol {
+protocol ListItemProtocol: Codable {
   var label: String { get }
   var isSelected: Bool { get set }
 }
 
-class ListItem: ListItemProtocol {
+class ListItem: ListItemProtocol, WatchSessionMessageItem {
   var label: String
   var isSelected: Bool
   

@@ -19,6 +19,7 @@ protocol ListPresenterInput: class {
   func didTapDelete(at index: Int)
   func didMoveRow(from originIndex: Int, to destinationIndex: Int)
   func didTapAZOrderButton()
+  func didTapSyncButton()
 }
 
 protocol ListPresenterOutput: class {
@@ -38,6 +39,9 @@ class ListPresenter {
 }
 
 extension ListPresenter: ListPresenterInput {
+  func didTapSyncButton() {
+    interactor.syncToWatch()
+  }
 
   func viewDidLoad() {
     interactor.loadItems()
@@ -84,21 +88,29 @@ extension ListPresenter: ListPresenterInput {
 
 extension ListPresenter: ListInteractorOutput {
   func notifyItemAdded() {
-    output.addRow()
-    output.emptyTextField()
+    DispatchQueue.main.async {
+      self.output.addRow()
+      self.output.emptyTextField()
+    }
   }
   
   func notifyItemsUpdated() {
-    output.emptyTextField()
-    output.reloadDatas()
+    DispatchQueue.main.async {
+      self.output.emptyTextField()
+      self.output.reloadDatas()
+    }
   }
   
   func notifyItemDeleted(at index: Int) {
-    let indexPath = IndexPath(row: index, section: 0)
-    output.deleteRowAtIndexPath(indexPath)
+    DispatchQueue.main.async {
+      let indexPath = IndexPath(row: index, section: 0)
+      self.output.deleteRowAtIndexPath(indexPath)
+    }
   }
   
   func notifyItemSelected(at index: Int) {
-    output.didMakeSelection(at: index)
+    DispatchQueue.main.async {
+      self.output.didMakeSelection(at: index)
+    }
   }
 }

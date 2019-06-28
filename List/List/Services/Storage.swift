@@ -21,8 +21,9 @@ enum StorageError: Error {
 
 class UserDefaultsStorage: Storage {
   
+  private let userDefaults = UserDefaults(suiteName: "group.rcaroff.list") ?? UserDefaults.standard
+
   func get<T: Decodable>(key: String) throws -> T {
-    let userDefaults = UserDefaults.standard
     guard let object = userDefaults.data(forKey: key) else {
       throw StorageError.noDataForKey(key: key)
     }
@@ -31,13 +32,11 @@ class UserDefaultsStorage: Storage {
   }
   
   func delete(key: String) throws {
-    let userDefaults = UserDefaults.standard
     userDefaults.set(nil, forKey: key)
     userDefaults.synchronize()
   }
   
   func set<T: Encodable>(object: T, forKey key: String) throws {
-    let userDefaults = UserDefaults.standard
     let data = try JSONEncoder().encode(object)
     userDefaults.set(data, forKey: key)
     userDefaults.synchronize()

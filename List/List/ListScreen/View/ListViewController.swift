@@ -10,18 +10,20 @@ import UIKit
 
 class ListViewController: UIViewController {
   
-  @IBOutlet var tableView: UITableView!
+  @IBOutlet var tableView: UITableView?
   private var footerInputView: ListFooterInputView?
   @IBOutlet private var editButton: UIBarButtonItem!
   @IBOutlet private var deleteAllButton: UIBarButtonItem!
   @IBOutlet private var deleteDoneButton: UIBarButtonItem!
   @IBOutlet private var azButton: UIBarButtonItem!
+  @IBOutlet private var syncButton: UIBarButtonItem!
   
   var presenter: ListPresenterInput!
 
   override func viewDidLoad() {
     super.viewDidLoad()
     presenter.viewDidLoad()
+    navigationController?.navigationBar.barTintColor = UIColor.systemBackground
   }
   
   @IBAction func clearAllButtonTapped() {
@@ -33,6 +35,7 @@ class ListViewController: UIViewController {
   }
   
   @IBAction func editButtonTapped() {
+    guard let tableView = tableView else { return }
     tableView.setEditing(!tableView.isEditing, animated: true)
     editButton.title = tableView.isEditing ? "Done" : "Edit"
     deleteAllButton.isEnabled = !tableView.isEditing
@@ -42,6 +45,10 @@ class ListViewController: UIViewController {
   
   @IBAction func azOrderButtonTapped() {
     presenter.didTapAZOrderButton()
+  }
+  
+  @IBAction func syncButtonTapped() {
+    presenter.didTapSyncButton()
   }
 }
 
@@ -118,12 +125,12 @@ extension ListViewController: ListPresenterOutput {
   
   func addRow() {
     let ip = IndexPath(row: presenter.numberOfItems()-1, section: 0)
-    tableView.insertRows(at: [ip], with: .automatic)
-    tableView.scrollToRow(at: IndexPath(row: presenter.numberOfItems()-1, section: 0), at: .top, animated: true)
+    tableView?.insertRows(at: [ip], with: .automatic)
+    tableView?.scrollToRow(at: IndexPath(row: presenter.numberOfItems()-1, section: 0), at: .top, animated: true)
   }
   
   func deleteRowAtIndexPath(_ indexPath: IndexPath) {
-    tableView.deleteRows(at: [indexPath], with: .automatic)
+    tableView?.deleteRows(at: [indexPath], with: .automatic)
   }
   
   func emptyTextField() {
@@ -131,11 +138,11 @@ extension ListViewController: ListPresenterOutput {
   }
   
   func reloadDatas() {
-    tableView.reloadSections([0], with: .automatic)
+    tableView?.reloadSections([0], with: .automatic)
   }
   
   func didMakeSelection(at index: Int) {
     let indexPath = IndexPath(row: index, section: 0)
-    tableView.reloadRows(at: [indexPath], with: .fade)
+    tableView?.reloadRows(at: [indexPath], with: .fade)
   }
 }
