@@ -23,6 +23,7 @@ protocol WatchListInteractorOutput: class {
   func notifyItemDeleted(at index: Int)
   func notifyItemAdded(item: ListItemProtocol, at index: Int)
   func notifyItemSelected(item: ListItemProtocol, at index: Int)
+  func notifyItemsListIsEmpty(_ empty: Bool)
 }
 
 // MARK: - Implementation
@@ -69,6 +70,11 @@ final class WatchListInteractor {
     } catch {
       print("Error trying to toggle selection")
     }
+  }
+  
+  private func deleteItem(at index: Int) {
+    items.remove(at: index)
+    output?.notifyItemDeleted(at: index)
   }
   
   private func save() {
@@ -123,6 +129,7 @@ extension WatchListInteractor: WatchSessionManagerWatchOutput {
     do {
       let message = WatchSessionMessage(action: WatchSessionMessageAction.load, index: 0, data: nil)
       try watchSessionManager.send(message: message)
+      output?.notifyItemsListIsEmpty(items.isEmpty)
     } catch {
       print("Watch cannot send message")
     }
@@ -137,7 +144,7 @@ extension WatchListInteractor: WatchSessionManagerWatchOutput {
   func didReceiveMessage(_ message: WatchSessionMessageProtocol) {
     switch message.action {
     case WatchSessionMessageAction.delete:
-      output?.notifyItemDeleted(at: message.index)
+      deleteItem(at: message.index)
     case WatchSessionMessageAction.load:
       tryUpdateItems(data: message.data)
     case WatchSessionMessageAction.add:
@@ -148,6 +155,7 @@ extension WatchListInteractor: WatchSessionManagerWatchOutput {
       break
     }
     
+    output?.notifyItemsListIsEmpty(items.isEmpty)
     save()
   }
 }

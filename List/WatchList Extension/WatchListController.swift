@@ -12,6 +12,7 @@ import Foundation
 class WatchListController: WKInterfaceController {
   
   @IBOutlet var tableView: WKInterfaceTable!
+  @IBOutlet var placeholderLabel: WKInterfaceLabel!
   
   var presenter: WatchListPresenterInput!
   
@@ -21,8 +22,8 @@ class WatchListController: WKInterfaceController {
     let pres = WatchListPresenter(interactor: interactor)
     pres.output = self
     interactor.setOutput(pres)
-    self.presenter = pres
-    self.presenter.awake()
+    presenter = pres
+    presenter.awake()
   }
   
   func reloadTable() {
@@ -43,6 +44,15 @@ class WatchListController: WKInterfaceController {
 // MARK: - WatchListPresenterOutput
 
 extension WatchListController: WatchListPresenterOutput {
+
+  func showTable(_ show: Bool) {
+    tableView.setHidden(!show)
+  }
+  
+  func showPlaceholder(_ show: Bool, with text: String? = nil) {
+    placeholderLabel.setText(text)
+    placeholderLabel.setHidden(!show)
+  }
 
   func setRow(viewModel: WatchListItemViewModel, at index: Int) {
     guard let row = tableView.rowController(at: index) as? WatchListTableRowController else { return }

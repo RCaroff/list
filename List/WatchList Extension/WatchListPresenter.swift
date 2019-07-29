@@ -20,6 +20,8 @@ protocol WatchListPresenterOutput: class {
   func deleteRow(_ row: Int)
   func addRow(viewModel: WatchListItemViewModel, at index: Int)
   func setRow(viewModel: WatchListItemViewModel, at index: Int)
+  func showTable(_ show: Bool)
+  func showPlaceholder(_ show: Bool, with text: String?)
 }
 
 class WatchListPresenter {
@@ -52,6 +54,19 @@ extension WatchListPresenter: WatchListPresenterInput {
 }
 
 extension WatchListPresenter: WatchListInteractorOutput {
+  
+  func notifyItemsListIsEmpty(_ empty: Bool) {
+    DispatchQueue.main.async {
+      self.output?.showTable(!empty)
+      self.output?.showPlaceholder(empty, with:
+        """
+        Start by adding elements on the iPhone app !
+        
+        📲
+        """
+      )
+    }
+  }
   
   func notifyItemSelected(item: ListItemProtocol, at index: Int) {
     DispatchQueue.main.async {

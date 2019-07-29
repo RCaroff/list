@@ -172,6 +172,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D117202EFFDBF78A1B2C6FD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -340,6 +347,7 @@
 			buildPhases = (
 				1428A90C2257E76400209580 /* Resources */,
 				1428A92C2257E76500209580 /* Embed App Extensions */,
+				D117202EFFDBF78A1B2C6FD6 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -536,20 +544,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-List/Pods-List-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-List/Pods-List-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-List/Pods-List-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-List/Pods-List-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-List/Pods-List-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		79BA238CA03547C9C8DE7D03 /* [CP] Check Pods Manifest.lock */ = {
