@@ -18,11 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     IQKeyboardManager.shared.enable = true
-    if #available(iOS 13.0, *) {
-        IQKeyboardManager.shared.toolbarTintColor = .link
-    } else {
-        IQKeyboardManager.shared.toolbarTintColor = .systemBlue
-    }
+//    if #available(iOS 13.0, *) {
+//        IQKeyboardManager.shared.toolbarTintColor = .link
+//    } else {
+//        IQKeyboardManager.shared.toolbarTintColor = .systemBlue
+//    }
+    
+    IQKeyboardManager.shared.toolbarTintColor = .blue
     
     guard let nc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as? UINavigationController else { return true }
     guard let vc = nc.viewControllers.first as? ListViewController else { return true }
