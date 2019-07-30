@@ -4,7 +4,8 @@ type "development" # The default type, can be: appstore, adhoc, enterprise or de
 
 app_identifier ["com.rcaroff.List", "com.rcaroff.List.watchkitapp", "com.rcaroff.List.watchkitapp.watchkitextension"]
 
-# username "user@fastlane.tools" # Your Apple Developer Portal username
+username "caroffremi@msn.com" # Your Apple Developer Portal username
+team_id "VM99UN38UP" # Developer Portal Team ID
 
 # For all available options run `fastlane match --help`
 # Remove the # in the beginning of the line to enable the other options

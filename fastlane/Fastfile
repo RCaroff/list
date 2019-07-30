@@ -15,6 +15,11 @@ fastlane_version "2.28.3"
 
 default_platform :ios
 
+APP_ID = "com.rcaroff.List"
+WATCH_APP_ID = "com.rcaroff.List.watchkitapp"
+WATCH_APP_EXTENSION_ID = "com.rcaroff.List.watchkitapp.watchkitextension"
+APP_IDENTIFIER = [APP_ID, WATCH_APP_ID, WATCH_APP_EXTENSION_ID]
+
 platform :ios do
   before_all do
     #ENV["SLACK_URL"] = "https://link-value.slack.com/messages/GLJRE1VT5"
@@ -22,15 +27,15 @@ platform :ios do
 
   desc "Generate provisioning profiles and certificates, pushes on certs repo and install them"
   lane :generate_signing_development do
-    match(app_identifier: ["com.rcaroff.List", "com.rcaroff.List.watchkitapp", "com.rcaroff.List.watchkitapp.watchkitextension"], type: "development")
+    match(app_identifier: APP_IDENTIFIER, type: "development")
   end
 
   lane :generate_signing_adhoc do
-    match(app_identifier: ["com.rcaroff.List", "com.rcaroff.List.watchkitapp", "com.rcaroff.List.watchkitapp.watchkitextension"], type: "adhoc")
+    match(app_identifier: APP_IDENTIFIER, type: "adhoc")
   end
 
   lane :generate_signing_appstore do
-    match(app_identifier: ["com.rcaroff.List", "com.rcaroff.List.watchkitapp", "com.rcaroff.List.watchkitapp.watchkitextension"], type: "appstore")
+    match(app_identifier: APP_IDENTIFIER, type: "appstore")
   end
 
   lane :generate_signing_all do
@@ -42,8 +47,9 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    # match(type: "adhoc") # more information: https://codesigning.guide
+    #match(type: "adhoc") # more information: https://codesigning.guide
     gym(scheme: "List") # Build your app - more options available
+
     pilot
 
     # sh "your_script.sh"

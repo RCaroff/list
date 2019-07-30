@@ -1,4 +1,5 @@
-app_identifier "com.rcaroff.List" # The bundle identifier of your app
+git_url "git@github.com:RCaroff/certs.git"
+app_identifier ["com.rcaroff.List", "com.rcaroff.List.watchkitapp", "com.rcaroff.List.watchkitapp.watchkitextension"] # The bundle identifier of your app
 apple_id "caroffremi@msn.com" # Your Apple email address
 
 team_id "VM99UN38UP" # Developer Portal Team ID
