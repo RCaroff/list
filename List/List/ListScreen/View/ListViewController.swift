@@ -23,7 +23,9 @@ class ListViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     presenter.viewDidLoad()
-    navigationController?.navigationBar.barTintColor = UIColor.systemBackground
+    if #available(iOS 13.0, *) {
+      navigationController?.navigationBar.barTintColor = UIColor.systemBackground
+    }
   }
   
   @IBAction func clearAllButtonTapped() {
