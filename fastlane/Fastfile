@@ -17,7 +17,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    ENV["SLACK_URL"] = "https://link-value.slack.com/messages/GLJRE1VT5"
+    #ENV["SLACK_URL"] = "https://link-value.slack.com/messages/GLJRE1VT5"
   end
 
   desc "Generate provisioning profiles and certificates, pushes on certs repo and install them"
@@ -69,16 +69,16 @@ platform :ios do
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 
-    slack(
-      message: "Successfully deployed new App Update."
-    )
+    #slack(
+    #  message: "Successfully deployed new App Update."
+    #)
   end
 
   error do |lane, exception|
-    slack(
-      message: exception.message,
-      success: false
-    )
+    #slack(
+    #  message: exception.message,
+    #  success: false
+    #)
   end
 end
 
