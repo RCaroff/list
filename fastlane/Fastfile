@@ -18,11 +18,15 @@ default_platform :ios
 APP_ID = "com.rcaroff.List"
 WATCH_APP_ID = "com.rcaroff.List.watchkitapp"
 WATCH_APP_EXTENSION_ID = "com.rcaroff.List.watchkitapp.watchkitextension"
-APP_IDENTIFIER = [APP_ID, WATCH_APP_ID, WATCH_APP_EXTENSION_ID]
+APP_IDENTIFIER = [APP_ID, WATCH_APP_ID, WATCH_APP_EXTENSION_ID]    
 
 platform :ios do
   before_all do
     #ENV["SLACK_URL"] = "https://link-value.slack.com/messages/GLJRE1VT5"
+    ENV["MAIN_PATH"]      = "/Users/caroffremi/Projects/list"
+    ENV["PROJECT_NAME"]   = "List"
+    ENV["SCHEME_NAME"]    = "List"
+    ENV["APP_ID"]         = "com.rcaroff.List"
   end
 
   desc "Generate provisioning profiles and certificates, pushes on certs repo and install them"
@@ -44,13 +48,74 @@ platform :ios do
     generate_signing_appstore
   end
 
+  lane :generate_appicon do
+    appicon(
+      appicon_devices: [:ipad, :iphone, :ios_marketing, :watch, :watch_marketing],
+      appicon_path: "#{ENV["MAIN_PATH"]}/List/Assets.xcassets"
+    )
+  end
+
+  desc "Set the version number with the one specified with parameter 'version'. Example : fastlane set_version_number version:1.6.3"
+  lane :set_version_number do |options|
+    increment_version_number_in_plist(
+      version_number: "#{options[:version]}" # Set a specific version number
+    )
+    update_icon_banner
+  end
+
+  desc "Set the build number with the one specified with parameter 'build'. Example : fastlane set_build_number build:1"
+  lane :set_build_number do |options|
+    increment_build_number_in_plist(
+      build_number: "#{options[:build]}" # Set a specific build number
+    )
+    update_icon_banner
+  end
+
+  lane :bump_version do |options|
+    increment_version_number_in_plist(
+      bump_type: options[:bump_type] # Automatically increment minor version number
+    )
+    increment_build_number_in_plist(
+      build_number: "0" # set build number to 0
+    )
+    commit_version_bump
+  end
+
+  lane :update_icon_banner do
+    icon_banner_restore()
+    version_number = get_version_number(xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj")
+    build_number = get_build_number(xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj")
+    icon_banner(label: "v.#{version_number} (#{build_number})")
+  end
+
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    #match(type: "adhoc") # more information: https://codesigning.guide
-    gym(scheme: "List") # Build your app - more options available
 
+    cocoapods
+    #match(type: "appstore") # more information: https://codesigning.guide
+
+    increment_build_number_in_plist
+
+    update_icon_banner
+    git_add(path: "#{ENV["MAIN_PATH"]}/.")
+    git_commit(path: "#{ENV["MAIN_PATH"]}/.", message: "Updated appicon badge")
+    
+    push_to_git_remote
+
+    gym(
+      export_method: "app-store",
+      export_options: {
+          provisioningProfiles: {
+              ENV["APP_ID"] => "match AppStore #{ENV["APP_ID"]}",
+          }
+      },
+    scheme: ENV["SCHEME_NAME"])
+  
+    # pilot will updload build to testflight
     pilot
+
+    icon_banner_restore()
 
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)

@@ -927,7 +927,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcaroff.List;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "AppList- Adhoc";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.rcaroff.List";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
