@@ -40,7 +40,7 @@ fastlane ios generate_signing_all
 ```
 fastlane ios generate_appicon
 ```
-
+Will generate appicons for app & watch from a 1024*1024px appicon.png file in project's fastlane folder. Warning : it will replace all icons files in AppIcon iconset.
 ### ios set_version_number
 ```
 fastlane ios set_version_number

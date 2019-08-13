@@ -22,11 +22,14 @@ APP_IDENTIFIER = [APP_ID, WATCH_APP_ID, WATCH_APP_EXTENSION_ID]
 
 platform :ios do
   before_all do
-    #ENV["SLACK_URL"] = "https://link-value.slack.com/messages/GLJRE1VT5"
-    ENV["MAIN_PATH"]      = "/Users/caroffremi/Projects/list"
-    ENV["PROJECT_NAME"]   = "List"
-    ENV["SCHEME_NAME"]    = "List"
-    ENV["APP_ID"]         = "com.rcaroff.List"
+    ENV["SLACK_URL"]        = "https://hooks.slack.com/services/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"
+    ENV["MAIN_PATH"]        = "/Users/caroffremi/Projects/list"
+    ENV["PROJECT_NAME"]     = "List"
+    ENV["APP_SCHEME"]       = "List"
+    ENV["APP_TARGET"]       = "List"
+    ENV["WATCH_TARGET"]     = "WatchList"
+    ENV["WATCH_EXT_TARGET"] = "WatchList Extension"
+    ENV["APP_ID"]           = "com.rcaroff.List"
   end
 
   desc "Generate provisioning profiles and certificates, pushes on certs repo and install them"
@@ -48,44 +51,81 @@ platform :ios do
     generate_signing_appstore
   end
 
+  desc "Will generate appicons for app & watch from a 1024*1024px appicon.png file in project's fastlane folder. Warning : it will replace all icons files in AppIcon iconset."
   lane :generate_appicon do
+    sh("rm #{ENV["MAIN_PATH"]}/List/Assets.xcassets/AppIcon.appiconset/*")
+    sh("rm #{ENV["MAIN_PATH"]}/WatchList/Assets.xcassets/AppIcon.appiconset/*")
     appicon(
+      appicon_image_file: "#{ENV["MAIN_PATH"]}/fastlane/appicon.png",
       appicon_devices: [:ipad, :iphone, :ios_marketing, :watch, :watch_marketing],
       appicon_path: "#{ENV["MAIN_PATH"]}/List/Assets.xcassets"
+    )
+
+    appicon(
+      appicon_image_file: "#{ENV["MAIN_PATH"]}/fastlane/appicon.png",
+      appicon_devices: [:watch, :watch_marketing],
+      appicon_path: "#{ENV["MAIN_PATH"]}/WatchList/Assets.xcassets"
     )
   end
 
   desc "Set the version number with the one specified with parameter 'version'. Example : fastlane set_version_number version:1.6.3"
   lane :set_version_number do |options|
     increment_version_number_in_plist(
-      version_number: "#{options[:version]}" # Set a specific version number
+      version_number: "#{options[:version]}", # Set a specific version number
+      target: "#{ENV["APP_TARGET"]}"
     )
-    update_icon_banner
+
+    increment_version_number_in_plist(
+      version_number: "#{options[:version]}", # Set a specific version number
+      target: "#{ENV["WATCH_TARGET"]}"
+    )
+
+    increment_version_number_in_plist(
+      version_number: "#{options[:version]}", # Set a specific version number
+      target: "#{ENV["WATCH_EXT_TARGET"]}"
+    )
+
   end
 
   desc "Set the build number with the one specified with parameter 'build'. Example : fastlane set_build_number build:1"
   lane :set_build_number do |options|
     increment_build_number_in_plist(
-      build_number: "#{options[:build]}" # Set a specific build number
+      build_number: "#{options[:build]}", # Set a specific build number
+      target: "#{ENV["APP_TARGET"]}"
     )
-    update_icon_banner
+
+    increment_build_number_in_plist(
+      build_number: "#{options[:build]}", # Set a specific build number
+      target: "#{ENV["WATCH_TARGET"]}"
+    )
+
+    increment_build_number_in_plist(
+      build_number: "#{options[:build]}", # Set a specific build number
+      target: "#{ENV["WATCH_EXT_TARGET"]}"
+    )
+
   end
 
   lane :bump_version do |options|
     increment_version_number_in_plist(
-      bump_type: options[:bump_type] # Automatically increment minor version number
+      bump_type: options[:bump_type], # Automatically increment minor version number
+      target: ENV["APP_TARGET"]
     )
-    increment_build_number_in_plist(
-      build_number: "0" # set build number to 0
+    increment_version_number_in_plist(
+      bump_type: options[:bump_type], # Automatically increment minor version number
+      target: ENV["WATCH_TARGET"]
     )
+    increment_version_number_in_plist(
+      bump_type: options[:bump_type], # Automatically increment minor version number
+      target: ENV["WATCH_EXT_TARGET"]
+    )
+    set_build_number(build: 0)
     commit_version_bump
   end
 
-  lane :update_icon_banner do
+  private_lane :update_icon_banner do
     icon_banner_restore()
-    version_number = get_version_number(xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj")
-    build_number = get_build_number(xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj")
-    icon_banner(label: "v.#{version_number} (#{build_number})")
+    icon_banner(label: get_version_string)
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
@@ -110,7 +150,7 @@ platform :ios do
               ENV["APP_ID"] => "match AppStore #{ENV["APP_ID"]}",
           }
       },
-    scheme: ENV["SCHEME_NAME"])
+    scheme: ENV["APP_SCHEME"])
   
     # pilot will updload build to testflight
     pilot
@@ -140,20 +180,34 @@ platform :ios do
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 
-    #slack(
-    #  message: "Successfully deployed new App Update."
-    #)
+    slack(
+      message: "✅ Successfully deployed new App Update. 🚀 ➡️ #{get_version_string}",
+      success: true
+    )
   end
 
   error do |lane, exception|
-    #slack(
-    #  message: exception.message,
-    #  success: false
-    #)
+    slack(
+      message: "❌ #{exception.message} 🖕",
+      success: false
+    )
   end
 end
 
+def get_version_string
+  version_number = get_version_number_from_plist(
+    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    target: "#{ENV["APP_TARGET"]}",
+    build_configuration_name: 'Release'
+  )
+  build_number = get_build_number_from_plist(
+    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    target: "#{ENV["APP_TARGET"]}",
+    build_configuration_name: 'Release'
+  )
 
+  return "v.#{version_number} (#{build_number})"
+end
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://docs.fastlane.tools/actions
 
