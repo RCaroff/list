@@ -135,7 +135,7 @@ platform :ios do
     cocoapods
     #match(type: "appstore") # more information: https://codesigning.guide
 
-    increment_build_number_in_plist
+    set_build_number(build: get_build_number.to_i + 1)
 
     update_icon_banner
     git_add(path: "#{ENV["MAIN_PATH"]}/.")
@@ -195,18 +195,26 @@ platform :ios do
 end
 
 def get_version_string
-  version_number = get_version_number_from_plist(
-    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
-    target: "#{ENV["APP_TARGET"]}",
-    build_configuration_name: 'Release'
-  )
-  build_number = get_build_number_from_plist(
-    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
-    target: "#{ENV["APP_TARGET"]}",
-    build_configuration_name: 'Release'
-  )
+  version_number = get_version_number
+  build_number = get_build_number
 
   return "v.#{version_number} (#{build_number})"
+end
+
+def get_build_number
+  return get_build_number_from_plist(
+    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    target: "#{ENV["APP_TARGET"]}",
+    build_configuration_name: 'Release'
+  )
+end
+
+def get_version_number
+  return get_version_number_from_plist(
+    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    target: "#{ENV["APP_TARGET"]}",
+    build_configuration_name: 'Release'
+  )
 end
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://docs.fastlane.tools/actions

@@ -56,11 +56,6 @@ Set the build number with the one specified with parameter 'build'. Example : fa
 fastlane ios bump_version
 ```
 
-### ios update_icon_banner
-```
-fastlane ios update_icon_banner
-```
-
 ### ios beta
 ```
 fastlane ios beta
