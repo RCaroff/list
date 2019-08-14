@@ -73,6 +73,11 @@ Deploy a new version to the App Store
 fastlane ios test
 ```
 Runs all the tests
+### ios slather_report
+```
+fastlane ios slather_report
+```
+
 
 ----
 

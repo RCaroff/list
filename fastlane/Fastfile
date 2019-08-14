@@ -24,6 +24,8 @@ platform :ios do
   before_all do
     ENV["SLACK_URL"]        = "https://hooks.slack.com/services/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"
     ENV["MAIN_PATH"]        = "/Users/caroffremi/Projects/list"
+    ENV["PROJECT_PATH"]     = "/Users/caroffremi/Projects/list/List.xcodeproj"
+    ENV["WORKSPACE_PATH"]   = "/Users/caroffremi/Projects/list/List.xcworkspace"
     ENV["PROJECT_NAME"]     = "List"
     ENV["APP_SCHEME"]       = "List"
     ENV["APP_TARGET"]       = "List"
@@ -133,13 +135,11 @@ platform :ios do
   lane :beta do
 
     cocoapods
-    #match(type: "appstore") # more information: https://codesigning.guide
-
     set_build_number(build: get_build_number.to_i + 1)
 
     update_icon_banner
     git_add(path: "#{ENV["MAIN_PATH"]}/.")
-    git_commit(path: "#{ENV["MAIN_PATH"]}/.", message: "Updated appicon badge")
+    git_commit(path: "#{ENV["MAIN_PATH"]}/.", message: "Updated version to #{get_version_string}")
     
     push_to_git_remote
 
@@ -174,7 +174,25 @@ platform :ios do
 
   desc "Runs all the tests"
   lane :test do
-    scan
+    run_tests(
+      workspace: ENV["WORKSPACE_PATH"],
+      scheme: "List",
+      code_coverage: true
+    )
+    slather
+  end
+
+  lane :slather_report do
+    slather(
+      build_directory: ENV["MAIN_PATH"],
+      input_format: "auto",
+      scheme: ENV["APP_SCHEME"],
+      proj: ENV["PROJECT_PATH"],
+      workspace: ENV["WORKSPACE_PATH"],
+      output_directory: "#{ENV["MAIN_PATH"]}/slather_report",
+      html: true,
+      configuration: "Release"
+    )
   end
 
   after_all do |lane|
@@ -203,7 +221,7 @@ end
 
 def get_build_number
   return get_build_number_from_plist(
-    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    xcodeproj: ENV["PROJECT_PATH"],
     target: "#{ENV["APP_TARGET"]}",
     build_configuration_name: 'Release'
   )
@@ -211,7 +229,7 @@ end
 
 def get_version_number
   return get_version_number_from_plist(
-    xcodeproj: "#{ENV["MAIN_PATH"]}/#{ENV["PROJECT_NAME"]}.xcodeproj",
+    xcodeproj: ENV["PROJECT_PATH"],
     target: "#{ENV["APP_TARGET"]}",
     build_configuration_name: 'Release'
   )

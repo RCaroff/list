@@ -115,7 +115,6 @@ GEM
       mini_magick (>= 4.9.4, < 5.0.0)
     fastlane-plugin-icon_banner (0.1.0)
       icon-banner (~> 0.1.0)
-    fastlane-plugin-trigger_bitrise_build (1.1.2)
     fastlane-plugin-versioning (0.3.4)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
@@ -228,7 +227,6 @@ DEPENDENCIES
   fastlane
   fastlane-plugin-appicon
   fastlane-plugin-icon_banner
-  fastlane-plugin-trigger_bitrise_build
   fastlane-plugin-versioning
 
 BUNDLED WITH

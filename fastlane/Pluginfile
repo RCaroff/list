@@ -4,5 +4,4 @@
 
 gem 'fastlane-plugin-versioning'
 gem 'fastlane-plugin-appicon'
-gem 'fastlane-plugin-trigger_bitrise_build'
 gem 'fastlane-plugin-icon_banner'
