@@ -83,10 +83,11 @@ extension ListViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListItemTableViewCell,
     let vm = presenter.viewModel(at: indexPath.row)
-    cell.textLabel?.text = vm?.label
-    cell.accessoryType = vm?.showCheckmark ?? false ? .checkmark : .none
+    else { return UITableViewCell() }
+    
+    cell.setContent(with: vm)
     
     return cell
   }

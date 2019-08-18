@@ -30,6 +30,7 @@
 		1428A94B225A9A4600209580 /* WatchSessionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1428A949225A97DE00209580 /* WatchSessionMessage.swift */; };
 		1428A94D225A9B0800209580 /* WatchSessionReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1428A94C225A9B0800209580 /* WatchSessionReply.swift */; };
 		1428A94E225A9B0800209580 /* WatchSessionReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1428A94C225A9B0800209580 /* WatchSessionReply.swift */; };
+		1445962B2309C28F00AF6102 /* ListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445962A2309C28F00AF6102 /* ListItemTableViewCell.swift */; };
 		146D68D822F07FF5006F7842 /* ListFooterInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1484DCAF21F7E3BD00A1A723 /* ListFooterInputView.xib */; };
 		146E139C22C3A6A80063F3A4 /* WatchListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1428A9342257E9AA00209580 /* WatchListController.swift */; };
 		1484DC7D21F66EFB00A1A723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484DC7C21F66EFB00A1A723 /* AppDelegate.swift */; };
@@ -122,6 +123,7 @@
 		1428A946225A904500209580 /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		1428A949225A97DE00209580 /* WatchSessionMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionMessage.swift; sourceTree = "<group>"; };
 		1428A94C225A9B0800209580 /* WatchSessionReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionReply.swift; sourceTree = "<group>"; };
+		1445962A2309C28F00AF6102 /* ListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemTableViewCell.swift; sourceTree = "<group>"; };
 		1484DC7921F66EFB00A1A723 /* List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = List.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1484DC7C21F66EFB00A1A723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1484DC7E21F66EFB00A1A723 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				1484DCA921F678ED00A1A723 /* ListItemViewModel.swift */,
 				1484DCAD21F7E3A900A1A723 /* ListFooterInputView.swift */,
 				1484DCAF21F7E3BD00A1A723 /* ListFooterInputView.xib */,
+				1445962A2309C28F00AF6102 /* ListItemTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				1484DCAA21F678ED00A1A723 /* ListItemViewModel.swift in Sources */,
 				1484DCA821F677FF00A1A723 /* ListItem.swift in Sources */,
 				1484DCA021F66FB200A1A723 /* ListPresenter.swift in Sources */,
+				1445962B2309C28F00AF6102 /* ListItemTableViewCell.swift in Sources */,
 				1428A947225A904500209580 /* WatchSessionManager.swift in Sources */,
 				1484DCA421F66FD900A1A723 /* ListRepository.swift in Sources */,
 				1428A94A225A97DE00209580 /* WatchSessionMessage.swift in Sources */,
