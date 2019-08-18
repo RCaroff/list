@@ -23,9 +23,9 @@ APP_IDENTIFIER = [APP_ID, WATCH_APP_ID, WATCH_APP_EXTENSION_ID]
 platform :ios do
   before_all do
     ENV["SLACK_URL"]        = "https://hooks.slack.com/services/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"
-    ENV["MAIN_PATH"]        = "/Users/caroffremi/Projects/list"
-    ENV["PROJECT_PATH"]     = "/Users/caroffremi/Projects/list/List.xcodeproj"
-    ENV["WORKSPACE_PATH"]   = "/Users/caroffremi/Projects/list/List.xcworkspace"
+    ENV["MAIN_PATH"]        = "./"
+    ENV["PROJECT_PATH"]     = "./List.xcodeproj"
+    ENV["WORKSPACE_PATH"]   = "./List.xcworkspace"
     ENV["PROJECT_NAME"]     = "List"
     ENV["APP_SCHEME"]       = "List"
     ENV["APP_TARGET"]       = "List"
@@ -197,16 +197,25 @@ platform :ios do
 
   after_all do |lane|
     # This block is called, only if the executed lane was successful
-
-    slack(
-      message: "✅ Successfully deployed new App Update. 🚀 ➡️ #{get_version_string}",
-      success: true
-    )
+    lane_name = "#{lane}"
+    puts "✅ Success lane #{lane}"
+    if lane_name == "beta"
+      slack(
+        message: "✅ #{lane} --- Successfully deployed new Beta Update. 🚀 ➡️ #{get_version_string}",
+        success: true
+      )
+    end
+    if lane_name == "generate_signing_all"
+      slack(
+        message: "✅ #{lane} --- Successfully generated all signing 📝",
+        success: true
+      )
+    end
   end
 
   error do |lane, exception|
     slack(
-      message: "❌ #{exception.message} 🖕",
+      message: "❌ #{lane} --- #{exception.message} 🖕",
       success: false
     )
   end
