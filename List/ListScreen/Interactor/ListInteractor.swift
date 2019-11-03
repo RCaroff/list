@@ -22,6 +22,7 @@ protocol ListInteractorInput: class {
   func moveItem(from originIndex: Int, to destinationIndex: Int)
   func makeAlpahabeticalOrder()
   func syncToWatch()
+  func updateItem(at index: Int, with string: String)
 }
 
 protocol ListInteractorOutput: class {
@@ -180,6 +181,12 @@ extension ListInteractor: ListInteractorInput {
     let item = items[originIndex]
     items.remove(at: originIndex)
     items.insert(item, at: destinationIndex)
+    loadToWatch(items: items)
+    saveState()
+  }
+  
+  func updateItem(at index: Int, with string: String) {
+    items[index].label = string
     loadToWatch(items: items)
     saveState()
   }

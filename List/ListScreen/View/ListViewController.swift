@@ -19,13 +19,13 @@ class ListViewController: UIViewController {
   @IBOutlet private var syncButton: UIBarButtonItem!
   
   var presenter: ListPresenterInput!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     presenter.viewDidLoad()
-//    if #available(iOS 13.0, *) {
-//      navigationController?.navigationBar.barTintColor = UIColor.systemBackground
-//    }
+    //    if #available(iOS 13.0, *) {
+    //      navigationController?.navigationBar.barTintColor = UIColor.systemBackground
+    //    }
   }
   
   @IBAction func clearAllButtonTapped() {
@@ -84,12 +84,22 @@ extension ListViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListItemTableViewCell,
-    let vm = presenter.viewModel(at: indexPath.row)
-    else { return UITableViewCell() }
+      let vm = presenter.viewModel(at: indexPath.row)
+      else { return UITableViewCell() }
     
-    cell.setContent(with: vm)
+    cell.setContent(with: vm, at: indexPath, delegate: self)
     
     return cell
+  }
+}
+
+extension ListViewController: ListItemTableViewCellDelegate {
+  func listItemCell(_ cell: ListItemTableViewCell, didFinishEditingWithText text: String, at indexPath: IndexPath) {
+    presenter.didUpdateItem(at: indexPath.row, with: text)
+  }
+  
+  func listItemCell(_ cell: ListItemTableViewCell, didStartEditingAt indexPath: IndexPath) {
+    
   }
 }
 

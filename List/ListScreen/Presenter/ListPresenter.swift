@@ -20,6 +20,7 @@ protocol ListPresenterInput: class {
   func didMoveRow(from originIndex: Int, to destinationIndex: Int)
   func didTapAZOrderButton()
   func didTapSyncButton()
+  func didUpdateItem(at index: Int, with string: String)
 }
 
 protocol ListPresenterOutput: class {
@@ -39,6 +40,10 @@ class ListPresenter {
 }
 
 extension ListPresenter: ListPresenterInput {
+  func didUpdateItem(at index: Int, with string: String) {
+    interactor.updateItem(at: index, with: string)
+  }
+  
   func didTapSyncButton() {
     interactor.syncToWatch()
   }
